@@ -9,8 +9,7 @@ async function unmediumify(mediumURL) {
         const finalURL = `${baseCacheURL}${mediumURL}&ie=UTF-8&strip=1&vwsrc=0`
         console.log(finalURL)
         const response = await axios.get(finalURL)
-
-        // if status code is not 200, throw error
+    
         if (response.status !== 200) {
             console.log("Invalid status code")
             return {title: "", htmlData: ""}
@@ -18,7 +17,6 @@ async function unmediumify(mediumURL) {
 
         const htmlContent = response.data
 
-        // Parse HTML using cheerio
         const $ = cheerio.load(htmlContent)
 
         // Extract title
@@ -41,7 +39,6 @@ async function unmediumify(mediumURL) {
         console.log(error)
         return {title: "", htmlData: ""}
       }
-    
 }
 
 module.exports = {

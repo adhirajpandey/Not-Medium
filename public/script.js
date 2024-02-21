@@ -15,12 +15,25 @@ async function sendQuery() {
         body: JSON.stringify(payload)
     })
 
+    console.log(response.status)
+    if (response.status === 400) {
+        return showFeedback("Invalid Input")
+    }
+
+    if (response.status === 503) {
+        return showFeedback("Unable to find article")
+    }
+
+    if (response.status === 500) {
+        return showFeedback("Internal Server Error")
+    }
+
     const data = await response.json()
 
     return data
 }
 
-function addToDOM(responseData) {
+function addArticleDataToDOM(responseData) {
     document.getElementById("output-div").innerHTML = ""
 
     const articleTitleElem = document.createElement("div")
@@ -45,22 +58,20 @@ function emptyOutputDiv() {
 }
 
 function showFeedback(text) {
-    var feedbackDiv = document.createElement("div")
+    const feedbackDiv = document.getElementById("feedback-div")
+    
+    feedbackDiv.innerHTML = ""
     feedbackDiv.innerText = text
     feedbackDiv.setAttribute("class", "text-2xl text-white text-center")
     feedbackDiv.setAttribute("id", "feedback-div")
-
-    document.body.appendChild(feedbackDiv)
+    
 }
 
 async function unmediumify() {
-    showFeedback("Searching...")
-    emptyOutputDiv()
-    const response = await sendQuery()
-    if (response.status === 200) {
-        addToDOM(response)
-    } else {
-        showFeedback("Unable to find article")
-    }
     emptyFeedbackDiv()
+    emptyOutputDiv()
+
+    const responseData = await sendQuery()
+
+    addArticleDataToDOM(responseData)
 }
