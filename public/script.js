@@ -7,7 +7,7 @@ async function sendQuery() {
         "inputLink": inputLink
     }
 
-    const response = await fetch(BASE_BACKEND_URL + "unmedium", {
+    const response = await fetch(BASE_BACKEND_URL + "unmediumify", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

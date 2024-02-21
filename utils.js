@@ -1,7 +1,7 @@
-function test() {
+function unmediumify() {
     return 1
 }
 
 module.exports = {
-    test
+    unmediumify
 }
