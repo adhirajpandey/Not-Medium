@@ -17,20 +17,26 @@ app.get("/", (req, resp) => {
 app.post("/unmediumify", async (req, resp) => {
     const mediumLink = req.body.inputLink
 
-    if (mediumLink.length < 1) {
-        resp.status(400).json({ error: "Invalid input" })
-    }
-    
-    const articleData = await unmediumify(mediumLink)
-
-    if (articleData.length < 500) {
-        resp.status(503).json({ error: "Unable to find article" })
+    if (!mediumLink || mediumLink.length < 1) {
+        return resp.status(400).json({ error: "Invalid input"})
     }
 
-    resp.json({
-        title: articleData.title,
-        html: articleData.htmlData
-    })
+    try {
+        const articleData = await unmediumify(mediumLink)
+
+        if (articleData.htmlData.length < 200) {
+            return resp.status(503).json({ error: "Unable to find article" })
+        } else {
+            resp.json({
+                title: articleData.title,
+                html: articleData.htmlData
+            })
+        }
+    } catch (error) {
+        console.error("Error processing request:", error);
+        resp.status(500).json({ error: "Internal Server Error" });
+    }
+
 })
 
 

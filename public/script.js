@@ -20,19 +20,23 @@ async function sendQuery() {
     return data
 }
 
-function addToDOM(htmlData) {
+function addToDOM(responseData) {
     document.getElementById("output-div").innerHTML = ""
+
+    const articleTitleElem = document.createElement("div")
+    articleTitleElem.innerHTML = responseData.title
+    articleTitleElem.setAttribute("class", "text-3xl text-white text-center font-bold p-4")
     
-    const outputElem = document.createElement("div")
-    outputElem.innerHTML = htmlData
-    outputElem.setAttribute("class", "text-2xl text-white p-4")
+    const outputTextElem = document.createElement("div")
+    outputTextElem.innerHTML = responseData.html
+    outputTextElem.setAttribute("class", "text-2xl text-white p-4")
     
-    document.getElementById("output-div").appendChild(outputElem)
-    console.log(outputElem)
+    document.getElementById("output-div").appendChild(articleTitleElem)
+    document.getElementById("output-div").appendChild(outputTextElem)
 }
 
-function removeFeedbackDiv() {
-    document.getElementById("feedback-div").remove()
+function emptyFeedbackDiv() {
+    document.getElementById("feedback-div").innerHTML = ""
 
 }
 
@@ -40,9 +44,9 @@ function emptyOutputDiv() {
     document.getElementById("output-div").innerHTML = ""
 }
 
-function showFeedback() {
+function showFeedback(text) {
     var feedbackDiv = document.createElement("div")
-    feedbackDiv.innerText = "Searching..."
+    feedbackDiv.innerText = text
     feedbackDiv.setAttribute("class", "text-2xl text-white text-center")
     feedbackDiv.setAttribute("id", "feedback-div")
 
@@ -50,9 +54,13 @@ function showFeedback() {
 }
 
 async function unmediumify() {
-    showFeedback()
+    showFeedback("Searching...")
     emptyOutputDiv()
     const response = await sendQuery()
-    addToDOM(response.html)
-    removeFeedbackDiv()
+    if (response.status === 200) {
+        addToDOM(response)
+    } else {
+        showFeedback("Unable to find article")
+    }
+    emptyFeedbackDiv()
 }

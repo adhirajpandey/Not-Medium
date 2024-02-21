@@ -6,9 +6,16 @@ const baseCacheURL = "https://webcache.googleusercontent.com/search?q=cache:"
 
 async function unmediumify(mediumURL) {
     try {
-        const finalURL = `${baseCacheURL}${mediumURL}&sca_esv=5d48de1e8e0fb59b&ie=UTF-8&strip=1&vwsrc=0`
-
+        const finalURL = `${baseCacheURL}${mediumURL}&ie=UTF-8&strip=1&vwsrc=0`
+        console.log(finalURL)
         const response = await axios.get(finalURL)
+
+        // if status code is not 200, throw error
+        if (response.status !== 200) {
+            console.log("Invalid status code")
+            return {title: "", htmlData: ""}
+        }
+
         const htmlContent = response.data
 
         // Parse HTML using cheerio
@@ -31,7 +38,8 @@ async function unmediumify(mediumURL) {
         return {title, htmlData}
 
     } catch (error) {
-        console.error(error);
+        console.log(error)
+        return {title: "", htmlData: ""}
       }
     
 }
