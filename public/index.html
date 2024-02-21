@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not Medium</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="./script.js"></script>
+</head>
+<body class="font-mono bg-slate-950 p-4">
+    <div class="text-4xl text-white text-center font-bold">
+        Not Medium
+    </div>
+    <br>
+    <div class="flex items-center bg-white rounded-lg px-1 py-1 justify-between">
+        <input id="input-link" class="text-black flex-grow outline-none px-2 py-2" type="text" placeholder="Enter article link" />
+        <button onclick="unmediumify()" class="bg-indigo-500 hover:bg-indigo-600 text-white rounded-lg px-2 py-2">Search</button>
+    </div>
+    <br>
+    <div id="output-div" class="bg-slate-600 rounded-lg"></div>
+    </body>
+</html>
