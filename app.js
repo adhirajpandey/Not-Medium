@@ -14,12 +14,23 @@ app.get("/", (req, resp) => {
     resp.sendFile(path.join(__dirname, "public", "index.html"))
 })
 
-app.post("/unmediumify", (req, resp) => {
-    setTimeout(() => {
+app.post("/unmediumify", async (req, resp) => {
+    const mediumLink = req.body.inputLink
+
+    if (mediumLink.length < 1) {
+        resp.status(400).json({ error: "Invalid input" })
+    }
+    
+    const articleData = await unmediumify(mediumLink)
+
+    if (articleData.length < 500) {
+        resp.status(503).json({ error: "Unable to find article" })
+    }
+
     resp.json({
-        html: "<h1> Hello from BE " + req.body.inputLink + "</h1>" + "<p> Medium paaragraph data </p>" + "<p> Medium paaragraph data 2 </p>" 
+        title: articleData.title,
+        html: articleData.htmlData
     })
-}, 2 * 1000)
 })
 
 
