@@ -15,15 +15,12 @@ async function sendQuery() {
         body: JSON.stringify(payload)
     })
 
-    console.log(response.status)
     if (response.status === 400) {
         return showFeedback("Invalid Input")
     }
-
     if (response.status === 503) {
         return showFeedback("Unable to find article")
     }
-
     if (response.status === 500) {
         return showFeedback("Internal Server Error")
     }
@@ -48,13 +45,8 @@ function addArticleDataToDOM(responseData) {
     document.getElementById("output-div").appendChild(outputTextElem)
 }
 
-function emptyFeedbackDiv() {
-    document.getElementById("feedback-div").innerHTML = ""
-
-}
-
-function emptyOutputDiv() {
-    document.getElementById("output-div").innerHTML = ""
+function emptyDiv(divId) {
+    document.getElementById(divId).innerHTML = ""
 }
 
 function showFeedback(text) {
@@ -63,15 +55,30 @@ function showFeedback(text) {
     feedbackDiv.innerHTML = ""
     feedbackDiv.innerText = text
     feedbackDiv.setAttribute("class", "text-2xl text-white text-center")
-    feedbackDiv.setAttribute("id", "feedback-div")
-    
+    feedbackDiv.setAttribute("id", "feedback-div")   
 }
 
+function validateInput() {
+    const inputLink = document.getElementById("input-link").value
+    if (inputLink.length > 1 && inputLink.includes("medium.com")) {
+        return true
+    }
+    return false
+}
+
+
 async function unmediumify() {
-    emptyFeedbackDiv()
-    emptyOutputDiv()
-
-    const responseData = await sendQuery()
-
-    addArticleDataToDOM(responseData)
+    emptyDiv("feedback-div")
+    emptyDiv("output-div")
+    
+    if (!validateInput()) {
+        return showFeedback("Invalid Input")
+    }
+    else {
+        showFeedback("Searching...")
+        const responseData = await sendQuery()
+        emptyDiv("feedback-div")
+        addArticleDataToDOM(responseData)
+    }
+    
 }
