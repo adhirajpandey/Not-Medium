@@ -20,8 +20,8 @@ async function unmediumify(mediumURL) {
 
         $("*").removeAttr("class")
 
-        const htmlData = $("#root > div > div:nth-child(2) > div:nth-child(3) > div:nth-child(1)").html()
-        
+        const htmlData = $("#root").html()
+
         return {title, htmlData}
 
     } catch (error) {

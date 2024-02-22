@@ -17,7 +17,7 @@ app.get("/", (req, resp) => {
 app.post("/unmediumify", async (req, resp) => {
     const mediumLink = req.body.inputLink
 
-    if (!mediumLink || mediumLink.length < 1) {
+    if (!mediumLink || mediumLink.length < 1 || !mediumLink.includes("medium.com")) {
         return resp.status(400).json({ error: "Invalid input"})
     }
 

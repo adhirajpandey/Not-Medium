@@ -1,33 +1,38 @@
 const BASE_BACKEND_URL = "http://localhost:8000/"
 
 async function sendQuery() {
-    const inputLink = document.getElementById("input-link").value
+    try {
+        const inputLink = document.getElementById("input-link").value
 
-    const payload = {
-        "inputLink": inputLink
+        const payload = {
+            "inputLink": inputLink
+        }
+
+        const response = await fetch(BASE_BACKEND_URL + "unmediumify", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        })
+
+        if (response.status === 400) {
+            return showFeedback("Invalid Input")
+        }
+        if (response.status === 503) {
+            return showFeedback("Unable to find article")
+        }
+        if (response.status === 500) {
+            return showFeedback("Internal Server Error")
+        }
+
+        const data = await response.json()
+
+        return data
+    } catch (error) {
+        console.error(error)
+        showFeedback("An error occurred")
     }
-
-    const response = await fetch(BASE_BACKEND_URL + "unmediumify", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-    })
-
-    if (response.status === 400) {
-        return showFeedback("Invalid Input")
-    }
-    if (response.status === 503) {
-        return showFeedback("Unable to find article")
-    }
-    if (response.status === 500) {
-        return showFeedback("Internal Server Error")
-    }
-
-    const data = await response.json()
-
-    return data
 }
 
 function addArticleDataToDOM(responseData) {
