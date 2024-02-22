@@ -16,19 +16,10 @@ async function sendQuery() {
             body: JSON.stringify(payload)
         })
 
-        if (response.status === 400) {
-            return showFeedback("Invalid Input")
-        }
-        if (response.status === 503) {
-            return showFeedback("Unable to find article")
-        }
-        if (response.status === 500) {
-            return showFeedback("Internal Server Error")
-        }
-
         const data = await response.json()
 
-        return data
+        return {data: data, status: response.status}
+
     } catch (error) {
         console.error(error)
         showFeedback("An error occurred")
@@ -82,7 +73,27 @@ async function unmediumify() {
     else {
         showFeedback("Searching...")
         const responseData = await sendQuery()
-        addArticleDataToDOM(responseData)
+        const statusCode = responseData.status
+
+        if (statusCode === 400) {
+            emptyDiv("feedback-div")
+            return showFeedback("Invalid Input")
+        }
+        if (statusCode === 503) {
+            emptyDiv("feedback-div")
+            return showFeedback("Unable to find article")
+        }
+        if (statusCode === 500) {
+            emptyDiv("feedback-div")
+            return showFeedback("Internal Server Error")
+        }
+        if (statusCode === 200) {
+            emptyDiv("feedback-div")
+            
+            const htmlData = responseData.data
+            addArticleDataToDOM(htmlData)
+        }
+        
     }
 }
 
