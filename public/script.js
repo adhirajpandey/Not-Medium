@@ -82,7 +82,6 @@ async function unmediumify() {
     else {
         showFeedback("Searching...")
         const responseData = await sendQuery()
-        emptyDiv("feedback-div")
         addArticleDataToDOM(responseData)
     }
 }
