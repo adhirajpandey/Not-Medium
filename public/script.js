@@ -40,11 +40,11 @@ function addArticleDataToDOM(responseData) {
 
     const articleTitleElem = document.createElement("div")
     articleTitleElem.innerHTML = responseData.title
-    articleTitleElem.setAttribute("class", "text-3xl text-white text-center font-bold p-4")
+    articleTitleElem.setAttribute("class", "text-2xl text-white text-center font-bold p-4")
     
     const outputTextElem = document.createElement("div")
     outputTextElem.innerHTML = responseData.html
-    outputTextElem.setAttribute("class", "text-2xl text-white p-4")
+    outputTextElem.setAttribute("class", "text-base text-white p-4")
     
     document.getElementById("output-div").appendChild(articleTitleElem)
     document.getElementById("output-div").appendChild(outputTextElem)
