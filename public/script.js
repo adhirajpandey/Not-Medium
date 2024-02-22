@@ -87,12 +87,17 @@ async function unmediumify() {
     }
 }
 
-// submit on enter key press
+
 document.addEventListener('DOMContentLoaded', function() {
+    // submit on enter key press
     document.getElementById("input-link").addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
             event.preventDefault()
             document.getElementById("search-button").click()
         }
+    })
+    // refresh page on clicking title
+    document.getElementById("title-text").addEventListener("click", function() {
+        location.reload(true)
     })
 })
