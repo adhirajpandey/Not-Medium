@@ -1,7 +1,7 @@
 const express = require("express")
 const cors = require("cors")
 const path = require("path")
-const { unmediumify } = require("./utils");
+const { unmediumify } = require("./utils")
 
 const app = express()
 
@@ -33,8 +33,8 @@ app.post("/unmediumify", async (req, resp) => {
             })
         }
     } catch (error) {
-        console.error("Error processing request:", error);
-        resp.status(500).json({ error: "Internal Server Error" });
+        console.error("Error processing request:", error)
+        resp.status(500).json({ error: "Internal Server Error" })
     }
 
 })

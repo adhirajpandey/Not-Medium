@@ -85,5 +85,14 @@ async function unmediumify() {
         emptyDiv("feedback-div")
         addArticleDataToDOM(responseData)
     }
-    
 }
+
+// submit on enter key press
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById("input-link").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault()
+            document.getElementById("search-button").click()
+        }
+    })
+})
