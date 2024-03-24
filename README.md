@@ -4,7 +4,7 @@
 
 Web App to read medium premium articles.
 
-Check it out - https://not-medium.adhiraj.live/
+Check it out - https://not-medium.adhirajpandey.me/
 
 
 ## Installation and Usage
