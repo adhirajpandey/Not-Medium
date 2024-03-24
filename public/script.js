@@ -1,4 +1,4 @@
-const BASE_BACKEND_URL = "https://not-medium.adhiraj.live/"
+const BASE_BACKEND_URL = "https://not-medium.adhirajpandey.me/"
 
 async function sendQuery() {
     try {
