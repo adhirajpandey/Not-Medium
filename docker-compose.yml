@@ -1,0 +1,10 @@
+services:
+  node-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nm-app
+    volumes:
+      - .:/usr/app
+    ports:
+      - "${PORT}:8000"
